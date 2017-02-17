@@ -14,18 +14,18 @@ describe('complete me', () => {
     assert.deepEqual(complete.root, new Node());
   });
 
-  it('should allow me to insert a letter' , () => {
-    complete.insert('h');
+  it('should be able to find the first letter' , () => {
+    complete.insert('hello');
     assert.property(complete.root.children, 'h');
   });
 
-  it('should allow me to insert a two letters' , () => {
+  it('should be able to split and find the second letter' , () => {
     complete.insert('hello');
 
     assert.property(complete.root.children['h'].children, 'e');
   });
 
-  it('should allow me to insert a three letters' , () => {
+  it('should be able to split and find the last letter' , () => {
     complete.insert('hey');
 
     assert.property(complete.root.children['h'].children['e'].children, 'y');
@@ -37,10 +37,27 @@ describe('complete me', () => {
     assert.equal(complete.root.children['h'].children['e'].endOfWord, false);
   });
 
-  it('should have the endOfWord return false if it is not the end of the word', () => {
+  it('should have the endOfWord return true if it is not the end of the word', () => {
     complete.insert('hey');
 
     assert.equal(complete.root.children['h'].children['e'].children['y'].endOfWord, true);
+  });
+
+  it('should be able to count the words inputted', () => {
+    complete.insert('something');
+    complete.insert('hello');
+
+    assert.equal(complete.count(), 2);
+  });
+
+  it('should be able to suggest words', () => {
+    complete.insert('something');
+    complete.insert('hello');
+    complete.insert('hell');
+
+    complete.suggest('he');
+
+    assert.deepEqual(complete.suggestions, ['hell', 'hello']);
   });
 
   it('should have a dictionary with the length of 235886', () => {
