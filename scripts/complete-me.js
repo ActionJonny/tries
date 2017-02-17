@@ -8,7 +8,6 @@ class CompleteMe {
     this.suggestions = [];
   }
 
-
   insert(word) {
     let letter      = word.split('');
     let currentNode = this.root;
@@ -23,7 +22,9 @@ class CompleteMe {
         currentNode = currentNode.children[letter[i]];
 
       }
+
     }
+
     this.length++;
     currentNode.endOfWord = true;
   }
@@ -41,7 +42,9 @@ class CompleteMe {
         return null;
 
       }
+
     }
+
     return this.words(currentNode, word);
   }
 
@@ -57,6 +60,7 @@ class CompleteMe {
       this.words(node, stringPassedIntoSuggest + nodeKey[i]);
 
     }
+
     return this.suggestions;
   }
 
@@ -69,6 +73,7 @@ class CompleteMe {
       this.insert(text[i]);
     }
   }
+
 }
 
 export default CompleteMe;
