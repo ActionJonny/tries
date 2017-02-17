@@ -3,12 +3,13 @@ require('locus');
 
 class CompleteMe {
   constructor() {
-    this.root  = new Node();
-    this.count = 0;
+    this.root        = new Node();
+    this.length      = 0;
+    this.suggestions = [];
   }
 
 
-  insert (word) {
+  insert(word) {
     let letter      = word.split('');
     let currentNode = this.root;
 
@@ -21,7 +22,7 @@ class CompleteMe {
         currentNode = currentNode.children[letter[i]];
       }
     }
-    this.count++;
+    this.length++;
     currentNode.endOfWord = true;
   }
 
@@ -29,9 +30,7 @@ class CompleteMe {
     let currentNode = this.root;
     let letter      = word.split('');
 
-
     for (var i = 0; i < letter.length; i++) {
-
       if (currentNode.children[letter[i]]) {
         currentNode = currentNode.children[letter[i]];
 
@@ -39,22 +38,34 @@ class CompleteMe {
         return null;
 
       }
-      // return this.words(currentNode, string);
+    }
+    return this.words(currentNode, word);
+  }
+
+  words(currentNode, string) {
+
+    if (currentNode.endOfWord) {
+      this.suggestions.push(string);
+    }
+
+    let nodeKey = Object.keys(currentNode.children);
+
+    for (var i = 0; i < nodeKey.length; i++) {
+      let node = currentNode.children[nodeKey[i]];
+      this.words(node, string + nodeKey[i]);
+    }
+    return this.suggestions;
+  }
+
+  count() {
+    return this.length;
+  }
+
+  populate (text) {
+    for (var i = 0; i < text.length; i++) {
+      this.insert(text[i]);
     }
   }
-
-  words() {
-
-  }
-
 }
-
-let completion = new CompleteMe();
-
-completion.insert('hello');
-completion.insert('goodbye');
-completion.insert('hell');
-
-console.log(JSON.stringify(completion, null, 4))
 
 export default CompleteMe;
