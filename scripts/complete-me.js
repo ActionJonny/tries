@@ -13,13 +13,15 @@ class CompleteMe {
     let letter      = word.split('');
     let currentNode = this.root;
 
-    for (var i = 0; i < letter.length; i++) {
+    for (let i = 0; i < letter.length; i++) {
 
       if (currentNode.children[letter[i]]) {
         currentNode = currentNode.children[letter[i]];
+
       } else {
         currentNode.children[letter[i]] = new Node(letter[i]);
         currentNode = currentNode.children[letter[i]];
+
       }
     }
     this.length++;
@@ -30,7 +32,8 @@ class CompleteMe {
     let currentNode = this.root;
     let letter      = word.split('');
 
-    for (var i = 0; i < letter.length; i++) {
+    for (let i = 0; i < letter.length; i++) {
+
       if (currentNode.children[letter[i]]) {
         currentNode = currentNode.children[letter[i]];
 
@@ -42,17 +45,17 @@ class CompleteMe {
     return this.words(currentNode, word);
   }
 
-  words(currentNode, string) {
-
-    if (currentNode.endOfWord) {
-      this.suggestions.push(string);
-    }
-
+  words(currentNode, stringPassedIntoSuggest) {
     let nodeKey = Object.keys(currentNode.children);
 
-    for (var i = 0; i < nodeKey.length; i++) {
+    if (currentNode.endOfWord) {
+      this.suggestions.push(stringPassedIntoSuggest);
+    }
+
+    for (let i = 0; i < nodeKey.length; i++) {
       let node = currentNode.children[nodeKey[i]];
-      this.words(node, string + nodeKey[i]);
+      this.words(node, stringPassedIntoSuggest + nodeKey[i]);
+
     }
     return this.suggestions;
   }
@@ -62,7 +65,7 @@ class CompleteMe {
   }
 
   populate (text) {
-    for (var i = 0; i < text.length; i++) {
+    for (let i = 0; i < text.length; i++) {
       this.insert(text[i]);
     }
   }

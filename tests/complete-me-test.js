@@ -60,6 +60,16 @@ describe('complete me', () => {
     assert.deepEqual(complete.suggestions, ['hell', 'hello']);
   });
 
+  it('should return an empty array if their is not a match', () => {
+    complete.insert('something');
+    complete.insert('hello');
+    complete.insert('hell');
+
+    complete.suggest('pi');
+
+    assert.deepEqual(complete.suggestions, []);
+  });
+
   it('should have a dictionary with the length of 235886', () => {
     let completion = new CompleteMe();
     const text     = '/usr/share/dict/words';
